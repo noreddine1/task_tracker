@@ -1,9 +1,10 @@
+from command_parser import parse_command
 
 def main():
     try:
-        while 1:
-            command_line = input("task-tracker->")
-            print(command_line)
+        while True:
+            command_line = input("task-tracker-> ")
+            parse_command(command_line)
     except KeyboardInterrupt:
         print("\nExiting....")
     except EOFError:
