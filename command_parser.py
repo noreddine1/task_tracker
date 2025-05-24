@@ -1,10 +1,5 @@
 from icecream import ic
 
-class   Lexer:
-    def __init__(self, s: str):
-       self.s = s.strip() if s != None else ""
-       self.len = len(self.s) 
-       self.index = 0
 
 def extract_command(line: str):
     index: int = line.find(' ')
@@ -17,3 +12,4 @@ def parse_command(line: str):
     line = line.strip()
     command, argument = extract_command(line)
     ic(command, argument)
+    return command, argument
