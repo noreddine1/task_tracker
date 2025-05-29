@@ -17,7 +17,9 @@ class   CLI:
                 command = parts[0].lower()
                 match command:
                     case 'add':
-                        add_task_handler(self.task_manager, parts[1:])
+                        self.add_task_handler(parts[1:])
+                    case 'list':
+                        self.list_tasks_handler(parts[1:] if len(parts) > 1 else [])
                     case 'exit':
                         exit(0)
                     case _:
@@ -26,12 +28,12 @@ class   CLI:
                 print('\nUse exit command to exit properly.')
 
 
-def add_task_handler(task_manager: TaskManager, args: list[str]):
-    if len(args) == 1:
-        task = task_manager.add_task(args[0])
-        print(f'task {task.id} "{task.description}" added succefully.')
-    else:
-        print("invalid args.")
-        task = None
-    return task
+    def add_task_handler(self, args: list[str]):
+        if len(args) == 1:
+            task = self.task_manager.add_task(args[0])
+            print(f'task {task.id} "{task.description}" added succefully.')
+        else:
+            print("invalid args.")
+            task = None
+        return task
     
