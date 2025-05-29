@@ -10,7 +10,7 @@ class TaskManager:
         self.tasks.append(task)
         return task
     
-    def list_taks(self, status=None):
+    def list_tasks(self, status=None):
         if not status:
             return self.tasks
         return [stask for stask in self.tasks if stask.status == status]
