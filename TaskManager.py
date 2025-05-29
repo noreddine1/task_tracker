@@ -14,3 +14,14 @@ class TaskManager:
         if not status:
             return self.tasks
         return [stask for stask in self.tasks if stask.status == status]
+    
+    def get_task(self, id: int) -> Task | None:
+        task_generator = (task for task in self.tasks if task.id == id)
+        return  next(task_generator, None)
+
+    def update_task(self, id: int, new_desc: str) -> Task:
+        task = self.get_task(id)
+        if not task:
+            return None
+        task.description = new_desc
+        return task
