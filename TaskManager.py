@@ -9,5 +9,8 @@ class TaskManager:
         task = Task(self.last_index, description, status)
         self.tasks.append(task)
         return task
-        
-        
+    
+    def list_taks(self, status=None):
+        if not status:
+            return self.tasks
+        return [stask for stask in self.tasks if stask.status == status]
