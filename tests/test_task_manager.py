@@ -41,40 +41,40 @@ def test_add_multiple_tasks_with_status():
     assert manager.last_index == 3
     assert len(manager.tasks) == 3
 
-def test_list_taks_returns_all_tasks_when_no_status():
+def test_list_tasks_returns_all_tasks_when_no_status():
     manager = TaskManager()
     t1 = manager.add_task('Task 1', 'todo')
     t2 = manager.add_task('Task 2', 'done')
     t3 = manager.add_task('Task 3', 'on-going')
-    all_tasks = manager.list_taks()
+    all_tasks = manager.list_tasks()
     assert all_tasks == [t1, t2, t3]
 
-def test_list_taks_filters_by_status():
+def test_list_tasks_filters_by_status():
     manager = TaskManager()
     t1 = manager.add_task('Task 1', 'todo')
     t2 = manager.add_task('Task 2', 'done')
     t3 = manager.add_task('Task 3', 'done')
-    done_tasks = manager.list_taks('done')
+    done_tasks = manager.list_tasks('done')
     assert done_tasks == [t2, t3]
     assert all(task.status == 'done' for task in done_tasks)
 
-def test_list_taks_returns_empty_when_no_tasks():
+def test_list_tasks_returns_empty_when_no_tasks():
     manager = TaskManager()
-    assert manager.list_taks() == []
-    assert manager.list_taks('todo') == []
+    assert manager.list_tasks() == []
+    assert manager.list_tasks('todo') == []
 
-def test_list_taks_returns_empty_when_no_status_matches():
+def test_list_tasks_returns_empty_when_no_status_matches():
     manager = TaskManager()
     manager.add_task('Task 1', 'todo')
     manager.add_task('Task 2', 'on-going')
-    assert manager.list_taks('done') == []
+    assert manager.list_tasks('done') == []
 
-def test_list_taks_with_multiple_statuses():
+def test_list_tasks_with_multiple_statuses():
     manager = TaskManager()
     t1 = manager.add_task('Task 1', 'todo')
     t2 = manager.add_task('Task 2', 'todo')
     t3 = manager.add_task('Task 3', 'done')
-    todo_tasks = manager.list_taks('todo')
+    todo_tasks = manager.list_tasks('todo')
     assert todo_tasks == [t1, t2]
-    done_tasks = manager.list_taks('done')
+    done_tasks = manager.list_tasks('done')
     assert done_tasks == [t3]

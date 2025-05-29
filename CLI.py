@@ -3,10 +3,10 @@ import shlex
 
 from TaskManager import TaskManager
 
-class   CLI:
+class CLI:
     def __init__(self, task_manager: TaskManager):
         self.task_manager = task_manager
-    
+
     def run(self):
         while True:
             try:
@@ -14,54 +14,61 @@ class   CLI:
                 if not user_input:
                     continue
                 parts = shlex.split(user_input)
-                command = parts[0].lower()
+                command, *args = parts
+                command = command.lower()
                 match command:
                     case 'add':
-                        self.add_task_handler(parts[1:])
+                        self.add_task_handler(args)
                     case 'list':
-                        self.list_tasks_handler(parts[1:] if len(parts) > 1 else [])
+                        self.list_tasks_handler(args)
+                    case 'update':
+                        self.update_task_handler(args)
                     case 'exit':
                         exit(0)
                     case _:
-                        print(f'unknown command: {command}')
+                        print(f'Unknown command: `{command}`')
             except (KeyboardInterrupt, EOFError):
                 print('\nUse exit command to exit properly.')
-
+            except ValueError as e:
+                print(f'Error: {e}')
 
     def add_task_handler(self, args: list[str]):
         if len(args) == 1:
-            task = self.task_manager.add_task(args[0])
-            print(f'task {task.id} "{task.description}" added succefully.')
-        else:
-            print("invalid args.")
-            task = None
-        return task
-    
+            task = self.task_manager.add_task(args[0].strip())
+            print(f'Task added successfully (ID: {task.id})')
+            return task
+        print("Invalid args. Usage: add <description>")
+        return None
+
     def list_tasks_handler(self, args: list[str]):
         """
         Handles the listing of tasks based on provided arguments.
-
-        Args:
-            args (list[str]): A list of arguments. If empty, lists all tasks.
-                If one argument is provided, lists tasks filtered by the argument (e.g., status).
-
-        Returns:
-            list: The list of tasks managed by the task manager.
-
-        Side Effects:
-            Prints the list of tasks to the console. If no tasks are available or invalid arguments are provided,
-            prints an appropriate message.
         """
-        if not args:
-            tasks = self.task_manager.list_taks()
-        elif len(args) == 1:
-            tasks = self.task_manager.list_taks(args[0])
-        else:
-            print("invalid args.")
+        if len(args) > 1:
+            print("Invalid args. Usage: list [status]")
             return
+        status = args[0] if args else None
+        tasks = self.task_manager.list_tasks(status)
         if not tasks:
             print("No tasks available.")
             return
         for task in tasks:
             print(f"{task.id}: {task.description} [{task.status}]")
-        return self.task_manager.tasks
+        return tasks
+
+    def update_task_handler(self, args: list[str]):
+        if len(args) != 2:
+            print("Invalid args. Usage: update <id> <new_description>")
+            return None
+        try:
+            id = int(args[0])
+        except ValueError:
+            print("Invalid id. Id must be an integer.")
+            return None
+        desc = args[1]
+        task = self.task_manager.update_task(id, desc)
+        if task:
+            print(f'Task {task.id} updated to: "{task.description}"')
+        else:
+            print(f'task {id} doesn\'t exist.')
+        return task
