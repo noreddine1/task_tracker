@@ -25,3 +25,10 @@ class TaskManager:
             return None
         task.description = new_desc
         return task
+    
+    def delete_task(self, id: int) -> bool:
+        task = self.get_task(id)
+        if not task:
+            return False
+        self.tasks.remove(task)
+        return True

@@ -63,3 +63,24 @@ def test_update_task_handler_nonexistent_id(capsys, cli):
     cli.update_task_handler(["99", "desc"])
     captured = capsys.readouterr()
     assert "doesn't exist" in captured.out.lower()
+
+def test_delete_task_handler_valid(capsys, cli):
+    cli.add_task_handler(["Task 1"])
+    cli.delete_task_handler(["1"])
+    captured = capsys.readouterr()
+    assert "task 1 deleted" in captured.out.lower()
+
+def test_delete_task_handler_invalid_args(capsys, cli):
+    cli.delete_task_handler([])
+    captured = capsys.readouterr()
+    assert "invalid args" in captured.out.lower()
+
+def test_delete_task_handler_invalid_id(capsys, cli):
+    cli.delete_task_handler(["abc"])
+    captured = capsys.readouterr()
+    assert "invalide id" in captured.out.lower() or "invalid id" in captured.out.lower()
+
+def test_delete_task_handler_nonexistent_id(capsys, cli):
+    cli.delete_task_handler(["99"])
+    captured = capsys.readouterr()
+    assert "does not exist" in captured.out.lower() or "could not be deleted" in captured.out.lower()

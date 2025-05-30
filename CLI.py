@@ -23,6 +23,8 @@ class CLI:
                         self.list_tasks_handler(args)
                     case 'update':
                         self.update_task_handler(args)
+                    case 'delete':
+                        self.delete_task_handler(args)
                     case 'exit':
                         exit(0)
                     case _:
@@ -30,7 +32,9 @@ class CLI:
             except (KeyboardInterrupt, EOFError):
                 print('\nUse exit command to exit properly.')
             except ValueError as e:
-                print(f'Error: {e}')
+                print(f'Syntax Error: {e}')
+            except  Exception as e:
+                print(e)
 
     def add_task_handler(self, args: list[str]):
         if len(args) == 1:
@@ -72,3 +76,18 @@ class CLI:
         else:
             print(f'task {id} doesn\'t exist.')
         return task
+
+    def delete_task_handler(self, args: list[str]):
+        if not args:
+            print("Invalid args. Usage: delete <id>.")
+            return
+        try:
+            id = int(args[0])
+        except ValueError:
+            print(f'Invalide id. Id must be integer.')
+            return
+        if self.task_manager.delete_task(id):
+            print(f'task {id} deleted.')
+        else:
+            print(f'task {id} does not exist or could not be deleted.')
+    

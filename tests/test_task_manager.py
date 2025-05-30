@@ -78,3 +78,18 @@ def test_list_tasks_with_multiple_statuses():
     assert todo_tasks == [t1, t2]
     done_tasks = manager.list_tasks('done')
     assert done_tasks == [t3]
+
+def test_delete_task_removes_task_and_returns_true():
+    manager = TaskManager()
+    t1 = manager.add_task('Task 1')
+    t2 = manager.add_task('Task 2')
+    assert manager.delete_task(t1.id) is True
+    assert t1 not in manager.tasks
+    assert len(manager.tasks) == 1
+    assert manager.tasks[0] == t2
+
+def test_delete_task_returns_false_for_invalid_id():
+    manager = TaskManager()
+    manager.add_task('Task 1')
+    result = manager.delete_task(999)  # Non-existent ID
+    assert result is False
