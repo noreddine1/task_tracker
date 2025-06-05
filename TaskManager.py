@@ -19,7 +19,7 @@ class TaskManager:
         task_generator = (task for task in self.tasks if task.id == id)
         return  next(task_generator, None)
 
-    def update_task(self, id: int, new_desc: str) -> Task:
+    def update_task(self, id: int, new_desc: str) -> Task | None:
         task = self.get_task(id)
         if not task:
             return None

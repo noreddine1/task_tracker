@@ -20,12 +20,21 @@ def execute(taskManager: TaskManager, command: str, argument: str):
             print(f"Unknown command: {command}")
 
 from CLI import CLI
+from storage import Storage
 
 def main():
-    taskManager = TaskManager()
-    
-    cli = CLI(taskManager)
-    cli.run()
+    try:
+        task_manager = TaskManager()
+        storage = Storage()
 
+        print('loading data...')
+        storage.load(task_manager)
+        cli = CLI(task_manager)
+        cli.run()
+    except Exception as e:
+        print(f'Error {e}')
+    finally:
+        print('saving data...')
+        storage.save(task_manager)
 if __name__ == "__main__":
     main()
