@@ -111,3 +111,21 @@ def test_delete_command_not_found(capsys, mock_task_manager):
     cmd.execute(['1'])
     captured = capsys.readouterr()
     assert "task 1 does not exist or could not be deleted." in captured.out
+
+from commands.mark_commands import MarkInProgressCommand
+from commands.exception import ToManyArgumentError, InvalidArgumentError
+
+def test_mark_in_progress_valid(mock_task_manager):
+    cmd = MarkInProgressCommand(mock_task_manager)
+    cmd.execute(['1'])
+    mock_task_manager.mark_task.assert_called_with(1, 'in-progress')
+
+def test_mark_in_progress_too_many_args(mock_task_manager):
+    cmd = MarkInProgressCommand(mock_task_manager)
+    with pytest.raises(ToManyArgumentError):
+        cmd.execute(['1', 'extra'])
+
+def test_mark_in_progress_invalid_arg(mock_task_manager):
+    cmd = MarkInProgressCommand(mock_task_manager)
+    with pytest.raises(InvalidArgumentError):
+        cmd.execute(['abc'])

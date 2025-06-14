@@ -6,6 +6,7 @@ from commands.add_command import AddCommand
 from commands.update_command import UpdateCommand
 from commands.list_command import ListCommand
 from commands.delete_command import DeleteCommand
+from commands.mark_commands import MarkInProgressCommand
 
 class CLI:
     def __init__(self, task_manager: TaskManager):
@@ -14,7 +15,8 @@ class CLI:
             'add': AddCommand(self.task_manager),
             'update': UpdateCommand(self.task_manager),
             'list': ListCommand(self.task_manager),
-            'delete': DeleteCommand(self.task_manager)
+            'delete': DeleteCommand(self.task_manager),
+            'mark-in-progress': MarkInProgressCommand(self.task_manager)
         }
 
     def run(self):

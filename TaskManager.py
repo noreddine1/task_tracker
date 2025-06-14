@@ -1,4 +1,5 @@
 from Task import Task
+from commands.exception import TaskNotFoundError
 class TaskManager:
     def __init__(self):
         self.last_index: int = 0
@@ -32,3 +33,10 @@ class TaskManager:
             return False
         self.tasks.remove(task)
         return True
+    
+    def mark_task(self, id: int, status: str):
+        task = self.get_task(id)
+        if not task :
+            raise TaskNotFoundError(id)
+        task.status = status
+        
