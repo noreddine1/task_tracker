@@ -1,5 +1,8 @@
 <!-- Project from https://roadmap.sh/projects/task-tracker -->
-# Task Tracker CLI App
+# Task Tracker CLI  
+**Project URL**: [https://github.com/your-username/task-tracker-cli](https://github.com/your-username/task-tracker-cli)  
+
+[![roadmap.sh](https://img.shields.io/badge/Submitted%20to-roadmap.sh-9cf)](https://roadmap.sh/backend)
 
 A simple command-line tool to manage your tasks and set their status (to-do, done, on-going).
 
