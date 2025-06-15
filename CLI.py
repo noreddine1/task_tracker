@@ -6,6 +6,7 @@ from commands.update_command import UpdateCommand
 from commands.list_command import ListCommand
 from commands.delete_command import DeleteCommand
 from commands.mark_commands import MarkInProgressCommand, MarkDone
+import sys
 
 class CLI:
     def __init__(self, task_manager: TaskManager):
@@ -29,7 +30,7 @@ class CLI:
                 command, *args = parts
                 command = command.lower()
                 if command == 'exit':
-                    exit(0)
+                    sys.exit(0)
                 elif command in self.commands:
                     self.commands[command].execute(args)
                 else:
