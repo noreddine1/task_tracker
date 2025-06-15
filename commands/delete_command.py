@@ -12,7 +12,7 @@ class DeleteCommand(Command):
         try:
             id = int(args[0])
         except ValueError:
-            print(f'Invalide id. Id must be integer.')
+            print('Invalide id. Id must be integer.')
             return
         if self.task_manager.delete_task(id):
             print(f'task {id} deleted.')
