@@ -129,3 +129,23 @@ def test_mark_in_progress_invalid_arg(mock_task_manager):
     cmd = MarkInProgressCommand(mock_task_manager)
     with pytest.raises(InvalidArgumentError):
         cmd.execute(['abc'])
+
+def test_mark_done_valid(mock_task_manager):
+    from commands.mark_commands import MarkDone
+    cmd = MarkDone(mock_task_manager)
+    cmd.execute(['2'])
+    mock_task_manager.mark_task.assert_called_with(2, 'done')
+
+def test_mark_done_too_many_args(mock_task_manager):
+    from commands.mark_commands import MarkDone
+    from commands.exception import ToManyArgumentError
+    cmd = MarkDone(mock_task_manager)
+    with pytest.raises(ToManyArgumentError):
+        cmd.execute(['2', 'extra'])
+
+def test_mark_done_invalid_arg(mock_task_manager):
+    from commands.mark_commands import MarkDone
+    from commands.exception import InvalidArgumentError
+    cmd = MarkDone(mock_task_manager)
+    with pytest.raises(InvalidArgumentError):
+        cmd.execute(['not-an-int'])
