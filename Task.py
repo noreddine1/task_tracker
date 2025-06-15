@@ -7,7 +7,7 @@ class Task:
         self.status = status
         self.created_at = datetime.now()
         self.updated_at = datetime.now()
-    
+
     def to_dict(self):
         return {
             "id": self.id,
@@ -16,7 +16,7 @@ class Task:
             "created_at": self.created_at.isoformat(),
             "updated_at": self.updated_at.isoformat()
         }
-    
+
     @classmethod
     def from_dict(cls, data: dict):
         try:

@@ -6,7 +6,7 @@ from Task import Task
 class Storage:
     def __init__(self, path_file: str='data.json'):
         self.path_file = Path(path_file)
-    
+
     def save(self, task_manager: TaskManager) -> bool:
         data = {
             'last_index': task_manager.last_index,
@@ -19,8 +19,8 @@ class Storage:
         except (IOError, KeyError) as e:
             print(f'Error saving tasks: {e}')
             return False
-            
-    
+
+
     def load(self, task_manager: TaskManager) -> bool:
         if not self.path_file.exists():
             return False

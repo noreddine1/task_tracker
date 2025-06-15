@@ -15,4 +15,3 @@ class InvalidArgumentError(TaskTrackerError):
 class TaskNotFoundError(TaskTrackerError):
     def __init__(self, id) -> None:
         super().__init__(f'task {id} not found.')
-    

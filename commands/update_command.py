@@ -4,7 +4,7 @@ from TaskManager import TaskManager
 class UpdateCommand(Command):
     def __init__(self, task_manager: TaskManager):
         self.task_manager = task_manager
-    
+
     def execute(self, args: list[str]):
         if len(args) != 2:
             print("Invalid args. Usage: update <id> <new_description>")

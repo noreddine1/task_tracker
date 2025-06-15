@@ -4,7 +4,7 @@ from TaskManager import TaskManager
 class DeleteCommand(Command):
     def __init__(self, task_manager: TaskManager):
         self.task_manager = task_manager
-    
+
     def execute(self, args: list[str]):
         if not args:
             print("Invalid args. Usage: delete <id>.")
